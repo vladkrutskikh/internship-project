@@ -1,7 +1,12 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from webdriver_manager.firefox import GeckoDriverManager
+
 from selenium.webdriver.support import expected_conditions as EC
 
 from app.application import Application
@@ -10,11 +15,18 @@ def browser_init(context):
     """
     :param context: Behave context
     """
-    driver_path = ChromeDriverManager().install()
-    service = Service(driver_path)
-    context.driver = webdriver.Chrome(service=service)
+    options = Options()
+    options.add_argument("--headless=new")  # для Chrome 109+
+    options.add_argument("--disable-gpu")
+    options.add_argument("--window-size=1920,1080")
 
-    context.driver.maximize_window()
+    service = ChromeService(ChromeDriverManager().install())
+    context.driver = webdriver.Chrome(service=service, options=options)
+
+    # options = FirefoxOptions()
+    # options.add_argument("--headless")
+    # service = FirefoxService(GeckoDriverManager().install())
+    # context.driver = webdriver.Firefox(service=service, options=options)
 
     context.driver.maximize_window()
     context.driver.implicitly_wait(4)

@@ -1,9 +1,11 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from pages.base_page import Page
 
 class MainPage(Page):
-    LOGIN_BTN = (By.CSS_SELECTOR, '.login-button.w-button')
+    LOGIN_BTN = (By.CSS_SELECTOR, ".login-button.w-button")
     LOGIN_FIELD = (By.ID, 'email-2')
     PASSWORD_FIELD = (By.ID, 'field')
     SECONDARY_LISTINGS_BTN = (By.CSS_SELECTOR, "a[href='/secondary-listings']")
@@ -13,7 +15,7 @@ class MainPage(Page):
         self.app = None
 
     def open(self):
-        self.open_url('https://soft.reelly.io')
+        self.open_url('https://soft.reelly.io/sign-in')
 
     def login(self):
         self.input_text(self.LOGIN_CREDENTIALS, *self.LOGIN_FIELD)

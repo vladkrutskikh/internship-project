@@ -40,11 +40,16 @@ class SecondaryPage(Page):
                     break
 
                 self.driver.find_element(By.CSS_SELECTOR, ".pagination__button.w-inline-block").click()
-                self.wait_for_listing_update()
+
+                WebDriverWait(self.driver, 10).until(
+                    lambda d: d.find_element(By.CSS_SELECTOR, '[wized="currentPageProperties"]').text.strip() != current
+                )
 
             except Exception as e:
                 print(f"Error: {e}")
-                break
+                assert False, f"Pagination to last page failed with error: {e}"
+
+        assert current == total, f"Did not reach last page. Current: {current}, Expected: {total}"
 
     def click_pagination_btn_first(self):
         while True:
@@ -65,8 +70,13 @@ class SecondaryPage(Page):
                     break
 
                 self.driver.find_element(By.CSS_SELECTOR, '[wized="previousPageMLS"]').click()
-                self.wait_for_listing_update()
+
+                WebDriverWait(self.driver, 10).until(
+                    lambda d: d.find_element(By.CSS_SELECTOR, '[wized="currentPageProperties"]').text.strip() != current
+                )
 
             except Exception as e:
                 print(f"Error: {e}")
-                break
+                assert False, f"Pagination to first page failed with error: {e}"
+
+        assert current == "1", f"Did not reach first page. Current: {current}, Expected: 1"
