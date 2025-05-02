@@ -15,18 +15,33 @@ def browser_init(context):
     """
     :param context: Behave context
     """
+
+    bs_user = 'vladkrutskikh_ROyqsE'
+    bs_key = 'CsmTHTdxwW8mYeN4x1A2'
+    url = f'https://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
     options = Options()
-    options.add_argument("--headless=new")  # для Chrome 109+
-    options.add_argument("--disable-gpu")
-    options.add_argument("--window-size=1920,1080")
+    bstack_options = {
+        'browserName': 'chrome',
+        'osVersion': 'Windows 10'
+    }
+    options.set_capability('bstack:options', bstack_options)
+    context.driver = webdriver.Remote(command_executor=url, options=options)
 
-    service = ChromeService(ChromeDriverManager().install())
-    context.driver = webdriver.Chrome(service=service, options=options)
 
-    # options = FirefoxOptions()
+    # options = Options()                 #Chrome
+    # options.add_argument("--headless=new")
+    # options.add_argument("--disable-gpu")
+    # options.add_argument("--window-size=1920,1080")
+    # service = ChromeService(ChromeDriverManager().install())
+    # context.driver = webdriver.Chrome(service=service, options=options)
+
+
+    # options = FirefoxOptions()        #Firefox
     # options.add_argument("--headless")
     # service = FirefoxService(GeckoDriverManager().install())
     # context.driver = webdriver.Firefox(service=service, options=options)
+
+    # context.driver = webdriver.Safari() #Safari
 
     context.driver.maximize_window()
     context.driver.implicitly_wait(4)

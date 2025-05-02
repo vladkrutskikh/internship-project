@@ -1,5 +1,6 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
 from time import sleep
 
 class Page:
@@ -55,6 +56,9 @@ class Page:
 
     def wait_for_url_change(self, old_url):
         self.wait.until(lambda driver: driver.current_url != old_url)
+
+    def wait_until(self, condition, timeout=15):
+        WebDriverWait(self.driver, timeout).until(condition)
 
     def verify_text(self):
          pass

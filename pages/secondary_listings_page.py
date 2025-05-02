@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from pages.base_page import Page
 
@@ -7,6 +8,7 @@ class SecondaryPage(Page):
     expected_url_page = "https://soft.reelly.io/secondary-listings"
 
     def page_secondary_check(self):
+        self.wait_until(EC.url_contains("soft.reelly.io/secondary-listings"))
         actual_url = self.driver.current_url
         assert self.expected_url_page in actual_url, f'Expected URL "soft.reelly.io/secondary-listings" is not shown'
 

@@ -16,11 +16,15 @@ class MainPage(Page):
 
     def open(self):
         self.open_url('https://soft.reelly.io/sign-in')
+        from time import sleep
+        sleep(8)
 
     def login(self):
         self.input_text(self.LOGIN_CREDENTIALS, *self.LOGIN_FIELD)
         self.input_text(self.PASSWORD_CREDENTIALS, *self.PASSWORD_FIELD)
         self.click(*self.LOGIN_BTN)
+        from time import sleep
+        sleep(8)
 
     def click_secondary_listings(self):
         self.click(*self.SECONDARY_LISTINGS_BTN)
