@@ -15,3 +15,7 @@ def log_in(context):
 @when("Click on the Secondary option at the left side menu")
 def click_secondary_option(context):
     context.app.main_page.click_secondary_listings()
+
+@when("For MOB click on the Secondary option at the left side menu")
+def click_secondary_option_mob(context):
+    context.app.main_page.click_secondary_listings_mob()
